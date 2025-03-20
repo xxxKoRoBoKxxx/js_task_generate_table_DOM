@@ -356,37 +356,27 @@ const people = [
 
 const table = document.querySelector('table.dashboard');
 
-function createCell(person, key, i, row) {
-  const cell = document.createElement('td');
-
-  row.append(cell);
-
-  if (key === 'sex') {
-    cell.innerText = person[key] === 'm' ? 'Male' : 'Female';
-  } else if (i === 4) {
-    cell.innerText = person.died - person.born;
-  } else if (i === 5) {
-    cell.innerText = Math.ceil(person.died / 100);
-  } else {
-    cell.innerText = person[key];
-  }
-}
-
 function createRows(data) {
   for (const person of data) {
     const row = document.createElement('tr');
+    const cells = ['name', 'sex', 'born', 'died', 'age', 'century'];
 
     table.append(row);
 
-    let i = 0;
+    for (const key of cells) {
+      const td = document.createElement('td');
 
-    for (const key in person) {
-      if (i > 5) {
-        break;
+      row.append(td);
+
+      if (key === 'sex') {
+        td.innerText = person[key] === 'm' ? 'Male' : 'Female';
+      } else if (key === 'age') {
+        td.innerText = person.died - person.born;
+      } else if (key === 'century') {
+        td.innerText = Math.ceil(person.died / 100);
+      } else {
+        td.innerText = person[key];
       }
-
-      createCell(person, key, i, row);
-      i++;
     }
   }
 }
